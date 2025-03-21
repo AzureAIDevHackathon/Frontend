@@ -7,13 +7,15 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
+import { ThemeToggle } from "@/components/theme-toggle"
+
 import { Button } from "@/components/ui/button"
 
 
 export default function Dashboard(){
     return(
-        <div className="flex flex-col w-full h-screen text-black gap-4">
-
+        <div className="flex flex-col w-full h-screen gap-4">
+            <ThemeToggle />
             <div className="w-full text-3xl">
                 Dashboard
             </div>
@@ -68,7 +70,7 @@ export default function Dashboard(){
                             <p>Card Content</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="hover:bg-green-400" variant="outline">Manage Savings Bucket</Button>
+                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">Manage Savings Bucket</Button>
                         </CardFooter>
                     </Card>
                 </div>
@@ -82,7 +84,7 @@ export default function Dashboard(){
                             <p>Card Content</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="hover:bg-green-400" variant="outline">View Investment Analysis</Button>
+                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">View Investment Analysis</Button>
                         </CardFooter>
                     </Card>
                 </div>
@@ -96,7 +98,7 @@ export default function Dashboard(){
                             <p>Card Content</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="hover:bg-green-400" variant="outline">View Reduction Plan</Button>
+                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">View Reduction Plan</Button>
                         </CardFooter>
                     </Card>
                 </div>
@@ -113,7 +115,7 @@ export default function Dashboard(){
                             <p>Card Content</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="hover:bg-green-400" variant="outline">View All Transactions</Button>
+                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">View All Transactions</Button>
                         </CardFooter>
                     </Card>
                 </div>
@@ -127,7 +129,7 @@ export default function Dashboard(){
                             <p>Card Content</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="hover:bg-green-400" variant="outline">Chat with AI Assistant</Button>
+                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">Chat with AI Assistant</Button>
                         </CardFooter>
                     </Card>
                 </div>

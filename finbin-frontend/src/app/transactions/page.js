@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 export default function Transaction(){
     return(
         <div className="flex flex-col w-full h-screen text-black gap-4">
+            <ThemeToggle />
             <div className = "grid grid-cols-3 gap-4">
                 <div>
                     <Card>
