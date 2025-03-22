@@ -14,13 +14,13 @@ import { Button } from "@/components/ui/button"
 
 export default function Dashboard(){
     return(
-        <div className="flex flex-col w-full h-screen gap-4">
+        <div className="flex flex-col w-full h-screen gap-10">
             <ThemeToggle />
             <div className="w-full text-3xl">
                 Dashboard
             </div>
 
-            <div className="grid grid-cols-4 gap-4">
+            <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                     <Card>
                         <CardContent>
@@ -59,7 +59,7 @@ export default function Dashboard(){
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <Card>
                         <CardHeader>
@@ -104,7 +104,7 @@ export default function Dashboard(){
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <Card>
                         <CardHeader>
