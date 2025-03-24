@@ -29,6 +29,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import Navbar from "@/components/navbar"
 
 
 export default function Transaction(){
@@ -82,114 +83,116 @@ export default function Transaction(){
 
 
     return(
-        <div className="flex flex-col w-full h-screen gap-5 p-6 min-w-[700px]">
-            <ThemeToggle />
-            <h1 className="text-2xl font-bold">Transactions</h1>
-            <div className = "grid grid-cols-3 gap-4">
+        <div className = "flex justify-start w-full h-screen">
+            <Navbar/>
+            <div className="flex flex-col w-full h-screen gap-5 py-15 p-6 min-w-[700px]">
+                <h1 className="text-2xl font-bold">Transactions</h1>
+                <div className = "grid grid-cols-3 gap-4">
+                    <div>
+                        <Card>
+                            <CardContent>
+                                <CardTitle>Total Income</CardTitle>
+                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <p className="text-2xl font-bold">$5200.00</p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <div>
+                        <Card>
+                            <CardContent>
+                                <CardTitle>Total Income</CardTitle>
+                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <p className="text-2xl font-bold">$5200.00</p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <div>
+                        <Card>
+                            <CardContent>
+                                <CardTitle>Total Income</CardTitle>
+                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <p className="text-2xl font-bold">$5200.00</p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+    {/* TABLE */}
                 <div>
                     <Card>
-                        <CardContent>
-                            <CardTitle>Total Income</CardTitle>
-                            <CardDescription>Monthly Income from all sources</CardDescription>
-                            <p className="text-2xl font-bold">$5200.00</p>
-                        </CardContent>
-                    </Card>
-                </div>
-                <div>
-                    <Card>
-                        <CardContent>
-                            <CardTitle>Total Income</CardTitle>
-                            <CardDescription>Monthly Income from all sources</CardDescription>
-                            <p className="text-2xl font-bold">$5200.00</p>
-                        </CardContent>
-                    </Card>
-                </div>
-                <div>
-                    <Card>
-                        <CardContent>
-                            <CardTitle>Total Income</CardTitle>
-                            <CardDescription>Monthly Income from all sources</CardDescription>
-                            <p className="text-2xl font-bold">$5200.00</p>
-                        </CardContent>
-                    </Card>
-                </div>
-            </div>
-{/* TABLE */}
-            <div>
-                <Card>
-                    <CardContent className="flex flex-col gap-4">
-                        <CardTitle>Transaction History</CardTitle>
-                        <CardDescription>View and filter your transaction history</CardDescription>
+                        <CardContent className="flex flex-col gap-4">
+                            <CardTitle>Transaction History</CardTitle>
+                            <CardDescription>View and filter your transaction history</CardDescription>
 
-                        <div className="flex justify-between items-center mb-4 gap-4">
-                            <Input placeholder="Search by invoice number" className="w-full" />
-                            <div className="flex flex-row gap-1">
+                            <div className="flex justify-between items-center mb-4 gap-4">
+                                <Input placeholder="Search by invoice number" className="w-full" />
+                                <div className="flex flex-row gap-1">
 
-                                <Select>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="All Category">All Category</SelectItem>
-                                        <SelectItem value="Groceries">Groceries</SelectItem>
-                                        <SelectItem value="Utilities">Utilities</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                    <Select>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="All Category">All Category</SelectItem>
+                                            <SelectItem value="Groceries">Groceries</SelectItem>
+                                            <SelectItem value="Utilities">Utilities</SelectItem>
+                                        </SelectContent>
+                                    </Select>
 
-                                <Select>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Time Period" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Today">Today</SelectItem>
-                                        <SelectItem value="Last 7 Days">Last 7 Days</SelectItem>
-                                        <SelectItem value="Last 30 days">Last 30 days</SelectItem>
-                                        <SelectItem value="Last Year">Last Year</SelectItem>
-                                    </SelectContent>
-                                </Select>
+                                    <Select>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Time Period" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Today">Today</SelectItem>
+                                            <SelectItem value="Last 7 Days">Last 7 Days</SelectItem>
+                                            <SelectItem value="Last 30 days">Last 30 days</SelectItem>
+                                            <SelectItem value="Last Year">Last Year</SelectItem>
+                                        </SelectContent>
+                                    </Select>
 
-                                <Button className="w-[180px]">
-                                    Export
-                                </Button>
+                                    <Button className="w-[180px]">
+                                        Export
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="flex justify-between items-center mb-4">
-                            <div>
-                                <CardTitle>Recent Transactions</CardTitle>
-                                <CardDescription>Your latest financial activities </CardDescription>
-                            </div>   
-                            <Button className="mb-4">Add Transaction</Button>
-                        </div>
+                            <div className="flex justify-between items-center mb-4">
+                                <div>
+                                    <CardTitle>Recent Transactions</CardTitle>
+                                    <CardDescription>Your latest financial activities </CardDescription>
+                                </div>   
+                                <Button className="mb-4">Add Transaction</Button>
+                            </div>
 
-                        <Table>
-                            <TableCaption>A list of your recent invoices.</TableCaption>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="w-[100px]">Invoice</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead>Method</TableHead>
-                                    <TableHead className="text-right">Amount</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-
-                                {invoices.map((invoice) => (
-                                    <TableRow key={invoice.invoice}>
-                                        <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                                        <TableCell>{invoice.paymentStatus}</TableCell>
-                                        <TableCell>{invoice.paymentMethod}</TableCell>
-                                        <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                            <Table>
+                                <TableCaption>A list of your recent invoices.</TableCaption>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="w-[100px]">Invoice</TableHead>
+                                        <TableHead>Status</TableHead>
+                                        <TableHead>Method</TableHead>
+                                        <TableHead className="text-right">Amount</TableHead>
                                     </TableRow>
-                                ))}
+                                </TableHeader>
+                                <TableBody>
 
-                            </TableBody>
-                        </Table>
+                                    {invoices.map((invoice) => (
+                                        <TableRow key={invoice.invoice}>
+                                            <TableCell className="font-medium">{invoice.invoice}</TableCell>
+                                            <TableCell>{invoice.paymentStatus}</TableCell>
+                                            <TableCell>{invoice.paymentMethod}</TableCell>
+                                            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                                        </TableRow>
+                                    ))}
 
-                    </CardContent>
-                </Card>
+                                </TableBody>
+                            </Table>
+
+                        </CardContent>
+                    </Card>
+                </div>
+    {/* TABLE */}
             </div>
-{/* TABLE */}
         </div>
     )
 }
