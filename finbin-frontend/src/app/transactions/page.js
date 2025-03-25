@@ -34,6 +34,51 @@ import Navbar from "@/components/navbar"
 
 export default function Transaction(){
 
+    const dummyinfo = {
+        "recent_transactions": [
+            {
+              "id": 301,
+              "user_id": 123,
+              "amount": -85.43,
+              "description": "Grocery Store Purchase",
+              "category": "Food",
+              "transaction_date": "2023-06-01T14:30:00Z",
+              "reference": "T78945612",
+              "is_reconciled": true
+            },
+            {
+              "id": 302,
+              "user_id": 123,
+              "amount": -120.00,
+              "description": "Electricity Bill",
+              "category": "Utilities",
+              "transaction_date": "2023-05-28T09:15:00Z",
+              "reference": "T78945589",
+              "is_reconciled": true
+            },
+            {
+              "id": 303,
+              "user_id": 123,
+              "amount": 5800.00,
+              "description": "Monthly Salary",
+              "category": "Income",
+              "transaction_date": "2023-05-25T08:00:00Z",
+              "reference": "T78945501",
+              "is_reconciled": true
+            },
+            {
+              "id": 304,
+              "user_id": 123,
+              "amount": -250.00,
+              "description": "Transfer to Europe Vacation Bucket",
+              "category": "Savings",
+              "transaction_date": "2023-05-25T10:30:00Z",
+              "reference": "T78945510",
+              "is_reconciled": true
+            }
+          ]
+    }
+
 
     const invoices = [
         {
@@ -168,20 +213,20 @@ export default function Transaction(){
                                 <TableCaption>A list of your recent invoices.</TableCaption>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="w-[100px]">Invoice</TableHead>
-                                        <TableHead>Status</TableHead>
-                                        <TableHead>Method</TableHead>
+                                        <TableHead className="w-[140px]">Invoice</TableHead>
+                                        <TableHead >Category</TableHead>
+                                        <TableHead>Date</TableHead>
                                         <TableHead className="text-right">Amount</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
 
-                                    {invoices.map((invoice) => (
-                                        <TableRow key={invoice.invoice}>
-                                            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                                            <TableCell>{invoice.paymentStatus}</TableCell>
-                                            <TableCell>{invoice.paymentMethod}</TableCell>
-                                            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                                    {dummyinfo.recent_transactions.map((transaction) => (
+                                        <TableRow key={transaction.id}>
+                                            <TableCell className="font-medium">{transaction.reference}</TableCell>
+                                            <TableCell>{transaction.category}</TableCell>
+                                            <TableCell>{transaction.transaction_date.split("T")[0]}</TableCell>
+                                            <TableCell className="text-right">{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
                                         </TableRow>
                                     ))}
 
