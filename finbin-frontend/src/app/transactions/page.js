@@ -31,21 +31,62 @@ import {
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import Navbar from "@/components/navbar"
-import { useEffect , useState} from "react"
+import { useEffect , useState , useRef} from "react"
+import { Label } from "@/components/ui/label"
 
 
 export default function Transaction(){
 
+    const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
     const [transactions, setTransactions] = useState([])
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        
+      amount: "",
+      description: "",
+      category: "",
+      transaction_date: "",
+      notes: "",
+    });
+
+    const modalRef = useRef(null);
 
     useEffect(() => {
         function getTransactions(){
-            fetch(`http://localhost:8080/transactions/user/2`)
+            fetch(`${apiroute}/transactions/user/2`)
             .then((res) => res.json())
             .then((data) => setTransactions(data))
         }
         getTransactions()
     }, [])
+
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData({ ...formData, [name]: value });
+    // };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     const newTransaction = {
+    //       ...formData,
+    //       user_id: 2,
+    //       reference: `T${Math.floor(Math.random() * 1000000000)}`,
+    //       is_reconciled: false,
+    //     };
+    //     fetch(`${apiroute}/transactions/user/2`, {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(newTransaction),
+    //     })
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         setTransactions([...transactions, data]);
+    //         setIsModalOpen(false);
+    //       });
+    //   };
 
     const dummyinfo = {
         "recent_transactions": [
@@ -219,7 +260,9 @@ export default function Transaction(){
                                     <CardTitle>Recent Transactions</CardTitle>
                                     <CardDescription>Your latest financial activities </CardDescription>
                                 </div>   
-                                <Button className="mb-4">Add Transaction</Button>
+                                <Button className="mb-4" onClick={() => setIsModalOpen(!isModalOpen)} variant="outline">
+                                    Add Transaction
+                                </Button>
                             </div>
 
                             <Table>
@@ -238,7 +281,7 @@ export default function Transaction(){
                                         <TableRow key={transaction.id}>
                                             <TableCell className="font-medium">{transaction.reference}</TableCell>
                                             <TableCell>{transaction.category}</TableCell>
-                                            <TableCell>{transaction.transaction_date.split("T")[0]}</TableCell>
+                                            <TableCell>{transaction.transaction_date?.split("T")[0]}</TableCell>
                                             <TableCell className={` text-right ${ transaction.amount < 0 ? "text-red-500" : "text-green-400"}`}>{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
                                         </TableRow>
                                     ))}
@@ -251,6 +294,86 @@ export default function Transaction(){
                 </div>
     {/* TABLE */}
             </div>
+            {/* {isModalOpen && (
+                <div className="fixed inset-0 bg-black/70 flex justify-center items-center">
+                <div ref={modalRef}>
+                    <Card className="w-[350px]">
+                    <CardHeader>
+                        <CardTitle>Add Transaction</CardTitle>
+                        <CardDescription>Fill in the details below</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <form onSubmit={handleSubmit}>
+                        <div className="grid w-full items-center gap-4">
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="amount">Amount</Label>
+                            <Input
+                                id="amount"
+                                name="amount"
+                                type="number"
+                                placeholder="Amount"
+                                value={formData.amount}
+                                onChange={handleInputChange}
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="description">Description</Label>
+                            <Input
+                                id="description"
+                                name="description"
+                                placeholder="Description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="category">Category</Label>
+                            <Input
+                                id="category"
+                                name="category"
+                                placeholder="Category"
+                                value={formData.category}
+                                onChange={handleInputChange}
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="transaction_date">Transaction Date</Label>
+                            <Input
+                                id="transaction_date"
+                                name="transaction_date"
+                                type="date"
+                                placeholder="Transaction Date"
+                                value={formData.transaction_date}
+                                onChange={handleInputChange}
+                                required
+                            />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="notes">Notes</Label>
+                            <Input
+                                id="notes"
+                                name="notes"
+                                placeholder="Notes"
+                                value={formData.notes}
+                                onChange={handleInputChange}
+                            />
+                            </div>
+                        </div>
+                        <CardFooter className="flex justify-between mt-4">
+                            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                            Cancel
+                            </Button>
+                            <Button type="submit">Submit</Button>
+                        </CardFooter>
+                        </form>
+                    </CardContent>
+                    </Card>
+                </div>
+                </div>
+            )} */}
         </div>
     )
 }
