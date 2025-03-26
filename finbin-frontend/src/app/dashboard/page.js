@@ -57,40 +57,48 @@ const formatCurrency = (value) => {
 
 
 
-let totalIncome = dummyinfo.income.salary + dummyinfo.income.business_income + dummyinfo.income.investments;
+
 let totalExpense = dummyinfo.expenses.rent_mortgage + dummyinfo.expenses.utilities + dummyinfo.expenses.insurance + dummyinfo.expenses.loan_payments + dummyinfo.expenses.groceries + dummyinfo.expenses.transportation + dummyinfo.expenses.subscriptions + dummyinfo.expenses.entertainment;
-let monthlySavings = totalIncome - totalExpense;
+// let monthlySavings = totalIncome - totalExpense;
 let netWorth = 12000.00; // Placeholder for net worth calculation
-let savingsBalance = dummyinfo.financial_summary.savings_balance;
-let investmentBalance = dummyinfo.financial_summary.investment_balance;
-let debtBalance = dummyinfo.financial_summary.debt_balance;
+// let savingsBalance = dummyinfo.financial_summary.savings_balance;
+// let investmentBalance = dummyinfo.financial_summary.investment_balance;
+// let debtBalance = dummyinfo.financial_summary.debt_balance;
 
 export default function Dashboard(){
 
-    // const [income, setIncome] = useState({})
-    // const [expense, setExpense] = useState({})
-    // const [financialSummary, setFinancialSummary] = useState({})
+    const [income, setIncome] = useState({})
+    const [expense, setExpense] = useState({})
+    const [financialSummary, setFinancialSummary] = useState({})
 
-    // useEffect(()=>{
-    //     function getIncome(){
-    //         fetch(`/api/income/${userId}`)
-    //         .then((res) => res.json())
-    //         .then((data) => setIncome(data))
-    //     }
-    //     function getExpense(){
-    //         fetch(`/api/expense/${userId}`)
-    //         .then((res) => res.json())
-    //         .then((data) => setExpense(data))
-    //     }
-    //     function getFinancialSummary(){
-    //         fetch(`/api/financial_summary/${userId}`)
-    //         .then((res) => res.json())
-    //         .then((data) => {setFinancialSummary(data)})
-    //     }
-    //     getIncome();
-    //     getExpense();
-    //     getFinancialSummary();
-    // },[])
+    useEffect(()=>{
+        function getIncome(){
+            fetch(`http://localhost:8080/incomes/user/2`)
+            .then((res) => res.json())
+            .then((data) => setIncome(data))
+        }
+        function getExpense(){
+            fetch(`http://localhost:8080/expenses/user/2`)
+            .then((res) => res.json())
+            .then((data) => setExpense(data))
+        }
+        function getFinancialSummary(){
+            fetch(`http://localhost:8080/financial-summaries/user/2`)
+            .then((res) => res.json())
+            .then((data) => setFinancialSummary(data))
+        }
+        getIncome();
+        getExpense();
+        getFinancialSummary();
+
+    },[])
+
+    let totalIncome = (income?.salary || 0) + (income?.investments || 0) + (income?.business_income || 0);
+    let totalExpense = (expense?.rent_mortgage || 0) + (expense?.utilities || 0) + (expense?.insurance || 0) + (expense?.loan_payments || 0) + (expense?.groceries || 0) + (expense?.transportation || 0) + (expense?.subscriptions || 0) + (expense?.entertainment || 0);
+    let monthlySavings = totalIncome - totalExpense;
+    let savingsBalance = financialSummary.savings_balance || 0;
+    let investmentBalance = financialSummary.investment_balance || 0;
+    let debtBalance = financialSummary.debt_balance || 0;
 
     return(
         <div className = "flex justify-start w-full h-screen">
