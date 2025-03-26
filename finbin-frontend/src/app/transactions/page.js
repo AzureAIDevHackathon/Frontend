@@ -36,17 +36,16 @@ import { useEffect , useState} from "react"
 
 export default function Transaction(){
 
-    // const [transactions, setTransactions] = useState([])
+    const [transactions, setTransactions] = useState([])
 
-    // useEffect(() => {
-    //     function getTransactions(){
-    //         console.log("helllooooo")
-    //         fetch(`http://localhost:8080/docs#/transactions/user/2`)
-    //         .then((res) => res.json())
-    //         .then((data) => setTransactions(data))
-    //     }
-    //     getTransactions()
-    // }, [])
+    useEffect(() => {
+        function getTransactions(){
+            fetch(`http://localhost:8080/transactions/user/2`)
+            .then((res) => res.json())
+            .then((data) => setTransactions(data))
+        }
+        getTransactions()
+    }, [])
 
     const dummyinfo = {
         "recent_transactions": [

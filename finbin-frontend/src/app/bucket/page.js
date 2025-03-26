@@ -26,16 +26,16 @@ import { useEffect, useState } from 'react'
 export default function (){
 
 
-    // const [buckets, setBuckets] = useState([])
+    const [buckets, setBuckets] = useState([])
 
-    // useEffect(()=>{
-    //     function getBuckets() {
-    //         fetch(`/api/bucket/${userid}`)
-    //         .then((res)=> res.json())
-    //         .then((data) => setBuckets(data))
-    //     }
-    //     getBuckets()
-    // },[])
+    useEffect(()=>{
+        function getBuckets() {
+            fetch(`http://localhost:8080/buckets/user/2`)
+            .then((res)=> res.json())
+            .then((data) => setBuckets(data))
+        }
+        getBuckets()
+    },[])
 
     const dummyinfo = {
         "buckets": [
@@ -79,50 +79,7 @@ export default function (){
                 <h1 className="w-full text-3xl">Bucket</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full text-3xl gap-3">
-    {/* BUCKET CARD */}
-                    <Card>
-                        <CardContent className ="flex flex-col gap-5">
-
-                            <div className="flex justify-between">
-                                <CardTitle className="text-2xl">Emergency Fund</CardTitle>
-                                <div className="flex flex-row ">
-                                    <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowUp/></Button>
-                                    <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowDown/></Button>
-                                    <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><Trash2/></Button>
-                                </div>
-                            </div>
-
-                            <CardDescription>Priority: {"High"}</CardDescription>
-
-                            <div className="flex justify-between text-sm">
-                                <CardDescription>Progress</CardDescription>
-                                <div className ="flex justify-end">{"50"}%</div>
-                            </div>
-
-                            <Progress value={50} className="w-full"/>
-
-                            <div className ="flex justify-between text-lg">
-                                <div>
-                                    <CardDescription>Saved</CardDescription>
-                                    <div>${"2,000"}</div>
-                                </div>
-                                <div className="flex flex-col items-end">
-                                    <CardDescription>Target</CardDescription>
-                                    <div>${"4,000"}</div>
-                                </div>
-                            </div>
-
-                            <Separator />
-
-                            <div className="flex flex-col text-lg">
-                                <CardDescription>Deadline</CardDescription>
-                                <div>{"Sep 22, 2025"}</div>
-                            </div>
-
-                        </CardContent>
-                    </Card>
-    {/* BUCKET CARD */}
-                    {dummyinfo.buckets.map((bucket) => {
+                    {buckets.map((bucket) => {
                         return(
                             <Card key={bucket.id}>
                                 <CardContent className ="flex flex-col gap-5">
@@ -136,7 +93,7 @@ export default function (){
                                         </div>
                                     </div>
 
-                                    <CardDescription>Priority: {"High"}</CardDescription>
+                                    <CardDescription>Priority: {bucket.priority_score}</CardDescription>
 
                                     <div className="flex justify-between text-sm">
                                         <CardDescription>Progress</CardDescription>
