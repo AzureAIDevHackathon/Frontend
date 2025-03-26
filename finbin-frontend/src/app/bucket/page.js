@@ -1,3 +1,4 @@
+"use client"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { AppSidebar } from "@/components/app-sidebar"
 
@@ -19,8 +20,58 @@ import { Button } from "@/components/ui/button"
 
 import {ArrowUp ,ArrowDown, Trash2} from "lucide-react"
 
+import { useEffect, useState } from 'react'
+
 
 export default function (){
+
+
+    // const [buckets, setBuckets] = useState([])
+
+    // useEffect(()=>{
+    //     function getBuckets() {
+    //         fetch(`/api/bucket/${userid}`)
+    //         .then((res)=> res.json())
+    //         .then((data) => setBuckets(data))
+    //     }
+    //     getBuckets()
+    // },[])
+
+    const dummyinfo = {
+        "buckets": [
+            {
+              "id": 201,
+              "user_id": 123,
+              "name": "Emergency Fund",
+              "target_amount": 10000.00,
+              "current_saved_amount": 8500.00,
+              "priority_score": 5,
+              "deadline": null,
+              "status": "active"
+            },
+            {
+              "id": 202,
+              "user_id": 123,
+              "name": "Europe Vacation",
+              "target_amount": 5000.00,
+              "current_saved_amount": 2800.00,
+              "priority_score": 3,
+              "deadline": "2023-12-15T00:00:00Z",
+              "status": "active"
+            },
+            {
+              "id": 203,
+              "user_id": 123,
+              "name": "New Car Down Payment",
+              "target_amount": 8000.00,
+              "current_saved_amount": 4450.00,
+              "priority_score": 4,
+              "deadline": "2024-03-01T00:00:00Z",
+              "status": "active"
+            }
+          ]
+    }
+
     return(
         <div className = "flex justify-start w-full h-screen">
             <Navbar/>
@@ -71,6 +122,55 @@ export default function (){
                         </CardContent>
                     </Card>
     {/* BUCKET CARD */}
+                    {dummyinfo.buckets.map((bucket) => {
+                        return(
+                            <Card key={bucket.id}>
+                                <CardContent className ="flex flex-col gap-5">
+
+                                    <div className="flex justify-between">
+                                        <CardTitle className="text-2xl">{bucket.name}</CardTitle>
+                                        <div className="flex flex-row ">
+                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowUp/></Button>
+                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowDown/></Button>
+                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><Trash2/></Button>
+                                        </div>
+                                    </div>
+
+                                    <CardDescription>Priority: {"High"}</CardDescription>
+
+                                    <div className="flex justify-between text-sm">
+                                        <CardDescription>Progress</CardDescription>
+                                        <div className ="flex justify-end">{Math.round((bucket.current_saved_amount / bucket.target_amount) * 100)}%</div>
+                                    </div>
+
+                                    <Progress value={Math.round((bucket.current_saved_amount / bucket.target_amount) * 100)} className="w-full"/>
+
+                                    <div className ="flex justify-between text-lg">
+                                        <div>
+                                            <CardDescription>Saved</CardDescription>
+                                            <div>${bucket.current_saved_amount.toLocaleString()}</div>
+                                        </div>
+                                        <div className="flex flex-col items-end">
+                                            <CardDescription>Target</CardDescription>
+                                            <div>${bucket.target_amount.toLocaleString()}</div>
+                                        </div>
+                                    </div>
+
+                                    {bucket.deadline && (
+                                        <Separator />
+                                    )}
+
+                                    {bucket.deadline && (
+                                        <div className="flex flex-col text-lg">
+                                            <CardDescription>Deadline</CardDescription>
+                                            <div>{new Date(bucket.deadline).toLocaleDateString()}</div>
+                                        </div>
+                                    )}
+
+                                </CardContent>
+                            </Card>
+                        )
+                    })}
                 </div>
 
                 <div>
