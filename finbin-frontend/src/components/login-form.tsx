@@ -9,11 +9,12 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Toaster, toast } from "sonner";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+
+const loginSchema = z.object({
+  Email: z.string().email({ message: "Please enter a valid email address." }),
+  Password: z.string().min(1, { message: "Password is required." }),
 })
  
 const DEMO_USER = [
@@ -28,22 +29,82 @@ const DEMO_USER = [
 export default function LoginForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      Email: "",
+      Password: ""
     },
   })
  
   // Submit handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(loginData: z.infer<typeof loginSchema>) {
     setIsLoading(true)
-    
+
+    try {
+      // Check for demo users first
+      const demoUser = DEMO_USER.find(
+        (user) => user.email.toLowerCase() === loginData.Email.toLowerCase() && user.password === loginData.Password,
+      )
+
+      if (demoUser) {
+        // Create a demo token
+        const demoToken = `dummy-token-${demoUser.id}-${Date.now()}`
+
+        // Store the token in localStorage
+        localStorage.setItem("token", demoToken)
+
+        // Store basic user info
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: demoUser.id,
+            name: demoUser.name,
+            email: demoUser.email,
+          }),
+        )
+
+        toast.success("Demo login successful")
+
+        // Redirect to dashboard
+        router.push("/dashboard")
+        return
+      }
+
+      // If not a dummy user, proceed with regular API login
+      // const result = await apiClient<AuthResponseDTO>("/auth/authorize", {
+      //   method: "POST",
+      //   body: JSON.stringify(loginData),
+      // })
+
+      // Store the token in localStorage
+      // localStorage.setItem("token", result.Token)
+
+      // Store basic user info
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify({
+      //     id: result.Id,
+      //     name: result.Name,
+      //     email: result.Email,
+      //   }),
+      // )
+
+      // Redirect to dashboard
+      router.push("/dashboard")
+
+    } catch (error) {
+      toast.message("Login failed")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return(
     <div>
+      <Toaster className="absolute bottom-0" />
       <Card className="">
         <CardContent className="pt-1">
           <Form {...form}>
@@ -51,7 +112,7 @@ export default function LoginForm() {
               <FormField
                 control={form.control}
                 name="Email"
-                render={({ field }) => (
+                render={({ field }:{ field:any }) => (
                   <FormItem className="">
                     <FormLabel className="">Email</FormLabel>
                     <FormControl>
@@ -64,11 +125,11 @@ export default function LoginForm() {
               <FormField
                 control={form.control}
                 name="Password"
-                render={({ field }) => (
+                render={({ field }:{ field:any }) => (
                   <FormItem className="">
                     <FormLabel className="">Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="********" {...field} disabled={isLoading} />
+                      <Input value="" type="password" placeholder="********" {...field} disabled={isLoading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -79,7 +140,7 @@ export default function LoginForm() {
                   Forgot password?
                 </Link>
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full hover:cursor-pointer" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
@@ -102,7 +163,7 @@ export default function LoginForm() {
                   form.setValue("Password", "password123")
                 }}
                 type="button"
-                className="text-xs"
+                className="text-xs hover:cursor-pointer"
               >
                 Use Demo Credentials
               </Button>
@@ -117,4 +178,4 @@ export default function LoginForm() {
       </Card>
     </div>
   )
-}
+  }
