@@ -1,3 +1,4 @@
+"use client"
 import {
     Card,
     CardContent,
@@ -30,9 +31,22 @@ import {
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import Navbar from "@/components/navbar"
+import { useEffect , useState} from "react"
 
 
 export default function Transaction(){
+
+    // const [transactions, setTransactions] = useState([])
+
+    // useEffect(() => {
+    //     function getTransactions(){
+    //         console.log("helllooooo")
+    //         fetch(`http://localhost:8080/docs#/transactions/user/2`)
+    //         .then((res) => res.json())
+    //         .then((data) => setTransactions(data))
+    //     }
+    //     getTransactions()
+    // }, [])
 
     const dummyinfo = {
         "recent_transactions": [
@@ -137,7 +151,7 @@ export default function Transaction(){
                         <Card>
                             <CardContent>
                                 <CardTitle>Total Income</CardTitle>
-                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <CardDescription>Income from all sources</CardDescription>
                                 <p className="text-2xl font-bold">$5200.00</p>
                             </CardContent>
                         </Card>
@@ -145,8 +159,8 @@ export default function Transaction(){
                     <div>
                         <Card>
                             <CardContent>
-                                <CardTitle>Total Income</CardTitle>
-                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <CardTitle>Total Expense</CardTitle>
+                                <CardDescription>Expense from all sources</CardDescription>
                                 <p className="text-2xl font-bold">$5200.00</p>
                             </CardContent>
                         </Card>
@@ -154,8 +168,8 @@ export default function Transaction(){
                     <div>
                         <Card>
                             <CardContent>
-                                <CardTitle>Total Income</CardTitle>
-                                <CardDescription>Monthly Income from all sources</CardDescription>
+                                <CardTitle>Net Amount</CardTitle>
+                                <CardDescription>Net amount from all sources</CardDescription>
                                 <p className="text-2xl font-bold">$5200.00</p>
                             </CardContent>
                         </Card>
@@ -221,12 +235,12 @@ export default function Transaction(){
                                 </TableHeader>
                                 <TableBody>
 
-                                    {dummyinfo.recent_transactions.map((transaction) => (
+                                    {transactions.map((transaction) => (
                                         <TableRow key={transaction.id}>
                                             <TableCell className="font-medium">{transaction.reference}</TableCell>
                                             <TableCell>{transaction.category}</TableCell>
                                             <TableCell>{transaction.transaction_date.split("T")[0]}</TableCell>
-                                            <TableCell className="text-right">{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
+                                            <TableCell className={` text-right ${ transaction.amount < 0 ? "text-red-500" : "text-green-400"}`}>{transaction.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</TableCell>
                                         </TableRow>
                                     ))}
 

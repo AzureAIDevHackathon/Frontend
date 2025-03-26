@@ -1,3 +1,4 @@
+"use client"
 import {
     Card,
     CardContent,
@@ -11,6 +12,8 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
+import { useEffect, useState } from "react"
+import { set } from "react-hook-form"
 
 const dummyinfo = {
     "financial_summary": {
@@ -52,6 +55,8 @@ const formatCurrency = (value) => {
         }).format(value);
 }
 
+
+
 let totalIncome = dummyinfo.income.salary + dummyinfo.income.business_income + dummyinfo.income.investments;
 let totalExpense = dummyinfo.expenses.rent_mortgage + dummyinfo.expenses.utilities + dummyinfo.expenses.insurance + dummyinfo.expenses.loan_payments + dummyinfo.expenses.groceries + dummyinfo.expenses.transportation + dummyinfo.expenses.subscriptions + dummyinfo.expenses.entertainment;
 let monthlySavings = totalIncome - totalExpense;
@@ -61,6 +66,32 @@ let investmentBalance = dummyinfo.financial_summary.investment_balance;
 let debtBalance = dummyinfo.financial_summary.debt_balance;
 
 export default function Dashboard(){
+
+    // const [income, setIncome] = useState({})
+    // const [expense, setExpense] = useState({})
+    // const [financialSummary, setFinancialSummary] = useState({})
+
+    // useEffect(()=>{
+    //     function getIncome(){
+    //         fetch(`/api/income/${userId}`)
+    //         .then((res) => res.json())
+    //         .then((data) => setIncome(data))
+    //     }
+    //     function getExpense(){
+    //         fetch(`/api/expense/${userId}`)
+    //         .then((res) => res.json())
+    //         .then((data) => setExpense(data))
+    //     }
+    //     function getFinancialSummary(){
+    //         fetch(`/api/financial_summary/${userId}`)
+    //         .then((res) => res.json())
+    //         .then((data) => {setFinancialSummary(data)})
+    //     }
+    //     getIncome();
+    //     getExpense();
+    //     getFinancialSummary();
+    // },[])
+
     return(
         <div className = "flex justify-start w-full h-screen">
             <Navbar/>

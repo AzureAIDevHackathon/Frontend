@@ -1,3 +1,4 @@
+"use client"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { AppSidebar } from "@/components/app-sidebar"
 
@@ -19,9 +20,22 @@ import { Button } from "@/components/ui/button"
 
 import {ArrowUp ,ArrowDown, Trash2} from "lucide-react"
 
+import { useEffect, useState } from 'react'
+
 
 export default function (){
 
+
+    // const [buckets, setBuckets] = useState([])
+
+    // useEffect(()=>{
+    //     function getBuckets() {
+    //         fetch(`/api/bucket/${userid}`)
+    //         .then((res)=> res.json())
+    //         .then((data) => setBuckets(data))
+    //     }
+    //     getBuckets()
+    // },[])
 
     const dummyinfo = {
         "buckets": [
@@ -57,6 +71,7 @@ export default function (){
             }
           ]
     }
+
     return(
         <div className = "flex justify-start w-full h-screen">
             <Navbar/>
