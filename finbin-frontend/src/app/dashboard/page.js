@@ -67,23 +67,27 @@ let netWorth = 12000.00; // Placeholder for net worth calculation
 
 export default function Dashboard(){
 
+    const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
     const [income, setIncome] = useState({})
     const [expense, setExpense] = useState({})
     const [financialSummary, setFinancialSummary] = useState({})
 
+    
+
     useEffect(()=>{
         function getIncome(){
-            fetch(`http://localhost:8080/incomes/user/2`)
+            fetch(`${apiroute}/incomes/user/2`)
             .then((res) => res.json())
             .then((data) => setIncome(data))
         }
         function getExpense(){
-            fetch(`http://localhost:8080/expenses/user/2`)
+            fetch(`${apiroute}/expenses/user/2`)
             .then((res) => res.json())
             .then((data) => setExpense(data))
         }
         function getFinancialSummary(){
-            fetch(`http://localhost:8080/financial-summaries/user/2`)
+            fetch(`${apiroute}/financial-summaries/user/2`)
             .then((res) => res.json())
             .then((data) => setFinancialSummary(data))
         }

@@ -25,12 +25,14 @@ import { useEffect, useState } from 'react'
 
 export default function (){
 
+    const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
 
     const [buckets, setBuckets] = useState([])
 
     useEffect(()=>{
         function getBuckets() {
-            fetch(`http://localhost:8080/buckets/user/2`)
+            fetch(`${apiroute}/buckets/user/2`)
             .then((res)=> res.json())
             .then((data) => setBuckets(data))
         }
