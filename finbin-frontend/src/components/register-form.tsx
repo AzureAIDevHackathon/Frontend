@@ -12,11 +12,16 @@ import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
 
 
-const registerSchema = z.object({
+const registerSchema = z
+  .object({
   Name: z.string().min(1, { message: "Please enter a valid name" }),
   Email: z.string().email({ message: "Please enter a valid email address." }),
   Password: z.string().min(1, { message: "Password is required." }),
   confirmPassword: z.string().min(1, { message: "Password is required." }),
+})  
+  .refine((data) => data.Password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
 })
 
 

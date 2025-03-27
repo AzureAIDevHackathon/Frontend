@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import { useEffect, useState } from "react"
 import { set } from "react-hook-form"
+import KernelAssistant from "@/components/kernel-assistant"
+import { MessageSquareText } from "lucide-react"
 
 const dummyinfo = {
     "financial_summary": {
@@ -73,7 +75,8 @@ export default function Dashboard(){
     const [expense, setExpense] = useState({})
     const [financialSummary, setFinancialSummary] = useState({})
 
-    
+    const [openChat, setChat] = useState(0);
+    function chatOpener(){setChat(!openChat)};
 
     useEffect(()=>{
         function getIncome(){
@@ -106,7 +109,17 @@ export default function Dashboard(){
 
     return(
         <div className = "flex justify-start w-full h-screen">
-            <Navbar/>
+            <Navbar />
+            <div onClick={chatOpener} className={openChat ? "hidden transition-all duration-300 ease-linear opacity-0" : "absolute z-10 right-16 bottom-12 h-[60px] w-[60px] dark:bg-blue-400 bg-sky-300 opacity-100 rounded-full ease-linear select-none hover:cursor-pointer hover:brightness-[85%] transition-all duration-200"}>
+                <div className="flex w-full h-full relative items-center text-black justify-center">  
+                    <div className="flex absolute justify-center"><MessageSquareText size={30} /></div>
+                </div>
+            </div>
+            <div className={openChat ? "absolute z-10 right-12 bottom-10 overflow-hidden w-[full] h-[full] p-0 rounded-md group-focus-within:scale-100 transition-all duration-150 origin-bottom-right" 
+            : "absolute z-10 right-12 bottom-10 overflow-hidden items-start w-[full] h-[full] p-0 rounded-md scale-0 transition-all duration-150 origin-bottom-right"}>
+                <KernelAssistant closeWindow={setChat} userId={2}  />
+            </div>
+            
             <div className="flex flex-col w-full h-screen gap-10 py-15 p-6">
                 <div className="w-full text-3xl">
                     Dashboard
@@ -221,7 +234,7 @@ export default function Dashboard(){
                                 <p>Card Content</p>
                             </CardContent>
                             <CardFooter>
-                                <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">Chat with AI Assistant</Button>
+                                <Button onClick={chatOpener} className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">Chat with AI Assistant</Button>
                             </CardFooter>
                         </Card>
                     </div>
