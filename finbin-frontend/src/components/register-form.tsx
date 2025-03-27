@@ -30,7 +30,8 @@ export default function RegisterForm() {
     defaultValues: {
       Name: "",
       Email: "",
-      Password: ""
+      Password: "",
+      confirmPassword: ""
     },
   })
  
@@ -40,27 +41,45 @@ export default function RegisterForm() {
 
     try {
       // This matches the AuthResponseDTO from the API docs
-      const result = await fetch("/users/", {
+      const registration = await fetch("/users", {
         method: "POST",
         body: JSON.stringify({
-          Name: data.Name,
-          Email: data.Email,
-          Password: data.Password,
+          name: data.Name,
+          email: data.Email,
+          password: data.Password,
+        }),
+      })
+        
+      toast.success("Your account has been created.")
+
+      const authCode = await fetch("/auth/authorize", {
+        method: "POST",
+        body: JSON.stringify({
+          client_id: "",
+          redirect_uri: "/dashboard",
+          code_challenge: "",
         }),
       })
 
-      toast.success("Your account has been created.")
+      const authToken = await fetch("/auth/token", {
+        method: "POST",
+        body: JSON.stringify({
+          grant_type: "authentication_code",
+          code: authCode,
+          code_verifier: "",
+        }),
+      })
 
       // Store the token in localStorage
-      localStorage.setItem("token", result.Token)
+      localStorage.setItem("token", authToken.toString())
 
       // Store basic user info
       localStorage.setItem(
         "user",
         JSON.stringify({
-          id: result.Id,
-          name: result.Name,
-          email: result.Email,
+          // id: data.Id,
+          name: data.Name,
+          email: data.Email,
         }),
       )
 
