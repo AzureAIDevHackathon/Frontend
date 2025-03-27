@@ -32,6 +32,12 @@ export default function Navbar(){
         router.push(path)  // Navigate to the specified path
         setIsOpen(false)  // close the menu when a link is clicked
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        router.push("/")
+      }
     
     return(
             <div className="relative">
@@ -95,11 +101,11 @@ export default function Navbar(){
                         <div className="w-full h-[3rem] flex">
                             <Button className="hover:bg-gray-200 hover:dark:bg-gray-700 h-full w-full flex flex-row justify-start" variant="outline">
                                 <div className="bg-amber-100 rounded-full w-[40px] h-[40px]" />
-                                <div>{`Joe Shmoe`}</div>
+                                <div>{'Joe Shmoe'}</div>
                             </Button>
                         </div>
                         <div className="flex flex-row gap-3 w-full justify-center">
-                            <Button className="hover:bg-gray-200 hover:dark:bg-gray-700" variant="outline">
+                            <Button className="hover:bg-gray-200 hover:dark:bg-gray-700" variant="outline" onClick={handleLogout}>
                                 <LogIn />
                             </Button>
                             <ThemeToggle />
@@ -155,7 +161,7 @@ export default function Navbar(){
                             </Button>
                         </div>
                         <div className="flex flex-row gap-3 w-full justify-center">
-                            <Button className="hover:bg-gray-200 hover:dark:bg-gray-700" variant="outline">
+                            <Button className="hover:bg-gray-200 hover:dark:bg-gray-700" variant="outline" onClick={handleLogout}>
                                 <LogIn/>
                             </Button>
                             <ThemeToggle />
