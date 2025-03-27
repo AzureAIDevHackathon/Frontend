@@ -2,9 +2,9 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import particleConfig from "../../components/particlesjs-config-1.json";
 import { useEffect } from "react";
-import LoginForm from "@/components/login-form";
+import RegisterForm from "@/components/register-form";
 
-export default function LoginPage() {
+export default function registerPage() {
     useEffect(() => {
       const loadParticles = async () => {
         await import("particles.js"); // Dynamic import for Next.js compatibility
@@ -23,17 +23,17 @@ export default function LoginPage() {
             <div className="flex justify-center mb-4 lg:hidden">
               {/* <Logo /> */}
             </div>
-            <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-            <p className="text-sm text-muted-foreground">Enter your credentials to access your account</p>
+            <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+            <p className="text-sm text-muted-foreground">Enter your details to create your account</p>
           </div>
-        <LoginForm/>
+        <RegisterForm/>
         </div>
       </div>
       <div className="absolute left-4 top-4 md:left-8 md:top-8">
         <ThemeToggle />
       </div>
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
-        <div id="particles-container" className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple-500 to-pink-400"></div>
+        <div id="particles-container" className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-500 to-green-500"></div>
         {/* <div className="absolute inset-0 bg-gradient-to-b from-purple-500 to-pink-400" /> */}
         <div className="relative z-20 flex items-center text-lg font-medium">
           Finbins
@@ -41,9 +41,10 @@ export default function LoginPage() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              "FinBins has completely transformed how I manage my finances. The AI insights are incredibly helpful!"
+            "With FinBins, I've been able to save more money than ever before. The savings buckets feature is a
+            game-changer!"
             </p>
-            <footer className="text-sm">Jane Doe</footer>
+            <footer className="text-sm">Ellen Joe</footer>
           </blockquote>
         </div>
       </div>
