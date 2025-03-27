@@ -22,6 +22,8 @@ import {ArrowUp ,ArrowDown, Trash2} from "lucide-react"
 
 import { useEffect, useState } from 'react'
 
+import  BucketForm  from '@/components/bucketForm'
+
 
 export default function (){
 
@@ -29,6 +31,7 @@ export default function (){
 
 
     const [buckets, setBuckets] = useState([])
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
         function getBuckets() {
@@ -39,46 +42,21 @@ export default function (){
         getBuckets()
     },[])
 
-    const dummyinfo = {
-        "buckets": [
-            {
-              "id": 201,
-              "user_id": 123,
-              "name": "Emergency Fund",
-              "target_amount": 10000.00,
-              "current_saved_amount": 8500.00,
-              "priority_score": 5,
-              "deadline": null,
-              "status": "active"
-            },
-            {
-              "id": 202,
-              "user_id": 123,
-              "name": "Europe Vacation",
-              "target_amount": 5000.00,
-              "current_saved_amount": 2800.00,
-              "priority_score": 3,
-              "deadline": "2023-12-15T00:00:00Z",
-              "status": "active"
-            },
-            {
-              "id": 203,
-              "user_id": 123,
-              "name": "New Car Down Payment",
-              "target_amount": 8000.00,
-              "current_saved_amount": 4450.00,
-              "priority_score": 4,
-              "deadline": "2024-03-01T00:00:00Z",
-              "status": "active"
-            }
-          ]
-    }
+    // Modal toggle
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
 
     return(
         <div className = "flex justify-start w-full h-screen">
             <Navbar/>
             <div className="flex flex-col flex-grow h-screen gap-5 p-6 py-15">
-                <h1 className="w-full text-3xl">Bucket</h1>
+                <div className="flex flex-row justify-between">
+                    <h1 className="w-full text-3xl">Bucket</h1>
+                    <Button className="mb-4" onClick={toggleModal} variant="outline">
+                        Add Bucket
+                    </Button>
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full text-3xl gap-3">
                     {buckets.map((bucket) => {
@@ -147,6 +125,16 @@ export default function (){
                 </div>
 
             </div>
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                    <div className=" p-8 rounded-lg w-1/3">
+                    <BucketForm
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                    />
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -33,153 +33,29 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import Navbar from "@/components/navbar"
 import { useEffect , useState , useRef} from "react"
 import { Label } from "@/components/ui/label"
+import TransactionForm from "@/components/transactionForm"
 
 
 export default function Transaction(){
 
-    const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
-
-    const [transactions, setTransactions] = useState([])
+    const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+    const [transactions, setTransactions] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        
-      amount: "",
-      description: "",
-      category: "",
-      transaction_date: "",
-      notes: "",
-    });
-
-    const modalRef = useRef(null);
-
+  
+    // Fetch transactions
     useEffect(() => {
-        function getTransactions(){
-            fetch(`${apiroute}/transactions/user/2`)
-            .then((res) => res.json())
-            .then((data) => setTransactions(data))
-        }
-        getTransactions()
-    }, [])
-
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData({ ...formData, [name]: value });
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const newTransaction = {
-    //       ...formData,
-    //       user_id: 2,
-    //       reference: `T${Math.floor(Math.random() * 1000000000)}`,
-    //       is_reconciled: false,
-    //     };
-    //     fetch(`${apiroute}/transactions/user/2`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(newTransaction),
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         setTransactions([...transactions, data]);
-    //         setIsModalOpen(false);
-    //       });
-    //   };
-
-    const dummyinfo = {
-        "recent_transactions": [
-            {
-              "id": 301,
-              "user_id": 123,
-              "amount": -85.43,
-              "description": "Grocery Store Purchase",
-              "category": "Food",
-              "transaction_date": "2023-06-01T14:30:00Z",
-              "reference": "T78945612",
-              "is_reconciled": true
-            },
-            {
-              "id": 302,
-              "user_id": 123,
-              "amount": -120.00,
-              "description": "Electricity Bill",
-              "category": "Utilities",
-              "transaction_date": "2023-05-28T09:15:00Z",
-              "reference": "T78945589",
-              "is_reconciled": true
-            },
-            {
-              "id": 303,
-              "user_id": 123,
-              "amount": 5800.00,
-              "description": "Monthly Salary",
-              "category": "Income",
-              "transaction_date": "2023-05-25T08:00:00Z",
-              "reference": "T78945501",
-              "is_reconciled": true
-            },
-            {
-              "id": 304,
-              "user_id": 123,
-              "amount": -250.00,
-              "description": "Transfer to Europe Vacation Bucket",
-              "category": "Savings",
-              "transaction_date": "2023-05-25T10:30:00Z",
-              "reference": "T78945510",
-              "is_reconciled": true
-            }
-          ]
-    }
-
-
-    const invoices = [
-        {
-          invoice: "INV001",
-          paymentStatus: "Paid",
-          totalAmount: "$250.00",
-          paymentMethod: "Credit Card",
-        },
-        {
-          invoice: "INV002",
-          paymentStatus: "Pending",
-          totalAmount: "$150.00",
-          paymentMethod: "PayPal",
-        },
-        {
-          invoice: "INV003",
-          paymentStatus: "Unpaid",
-          totalAmount: "$350.00",
-          paymentMethod: "Bank Transfer",
-        },
-        {
-          invoice: "INV004",
-          paymentStatus: "Paid",
-          totalAmount: "$450.00",
-          paymentMethod: "Credit Card",
-        },
-        {
-          invoice: "INV005",
-          paymentStatus: "Paid",
-          totalAmount: "$550.00",
-          paymentMethod: "PayPal",
-        },
-        {
-          invoice: "INV006",
-          paymentStatus: "Pending",
-          totalAmount: "$200.00",
-          paymentMethod: "Bank Transfer",
-        },
-        {
-          invoice: "INV007",
-          paymentStatus: "Unpaid",
-          totalAmount: "$300.00",
-          paymentMethod: "Credit Card",
-        },
-        
-      ]
-
+      function getTransactions() {
+        fetch(`${apiroute}/transactions/user/2`)
+          .then((res) => res.json())
+          .then((data) => setTransactions(data));
+      }
+      getTransactions();
+    }, []);
+  
+    // Modal toggle
+    const toggleModal = () => {
+      setIsModalOpen(!isModalOpen);
+    };
 
     return(
         <div className = "flex justify-start w-full h-screen">
@@ -260,7 +136,7 @@ export default function Transaction(){
                                     <CardTitle>Recent Transactions</CardTitle>
                                     <CardDescription>Your latest financial activities </CardDescription>
                                 </div>   
-                                <Button className="mb-4" onClick={() => setIsModalOpen(!isModalOpen)} variant="outline">
+                                <Button className="mb-4" onClick={toggleModal} variant="outline">
                                     Add Transaction
                                 </Button>
                             </div>
@@ -294,86 +170,16 @@ export default function Transaction(){
                 </div>
     {/* TABLE */}
             </div>
-            {/* {isModalOpen && (
-                <div className="fixed inset-0 bg-black/70 flex justify-center items-center">
-                <div ref={modalRef}>
-                    <Card className="w-[350px]">
-                    <CardHeader>
-                        <CardTitle>Add Transaction</CardTitle>
-                        <CardDescription>Fill in the details below</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <form onSubmit={handleSubmit}>
-                        <div className="grid w-full items-center gap-4">
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="amount">Amount</Label>
-                            <Input
-                                id="amount"
-                                name="amount"
-                                type="number"
-                                placeholder="Amount"
-                                value={formData.amount}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="description">Description</Label>
-                            <Input
-                                id="description"
-                                name="description"
-                                placeholder="Description"
-                                value={formData.description}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="category">Category</Label>
-                            <Input
-                                id="category"
-                                name="category"
-                                placeholder="Category"
-                                value={formData.category}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="transaction_date">Transaction Date</Label>
-                            <Input
-                                id="transaction_date"
-                                name="transaction_date"
-                                type="date"
-                                placeholder="Transaction Date"
-                                value={formData.transaction_date}
-                                onChange={handleInputChange}
-                                required
-                            />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="notes">Notes</Label>
-                            <Input
-                                id="notes"
-                                name="notes"
-                                placeholder="Notes"
-                                value={formData.notes}
-                                onChange={handleInputChange}
-                            />
-                            </div>
-                        </div>
-                        <CardFooter className="flex justify-between mt-4">
-                            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-                            Cancel
-                            </Button>
-                            <Button type="submit">Submit</Button>
-                        </CardFooter>
-                        </form>
-                    </CardContent>
-                    </Card>
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                    <div className=" p-8 rounded-lg w-1/3">
+                    <TransactionForm
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                    />
+                    </div>
                 </div>
-                </div>
-            )} */}
+            )}
         </div>
     )
 }
