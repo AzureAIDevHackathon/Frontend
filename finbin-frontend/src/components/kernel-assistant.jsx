@@ -100,10 +100,10 @@ const KernelAssistant = ({ userId, closeWindow }) => {
   };
   
   return (
-    <div className={styles.chatContainer}>
+    <div className="flex flex-col h-[500px] w-[100%] max-w-[400px] overflow-hidden bg-white shadow-md">
       <div className={`${styles.chatHeader} select-none`}>
         <h2>Financial Assistant</h2>
-        <div className={`${styles.statusIndicator} ${connected ? styles.connected : styles.disconnected}`}>
+        <div className={`${styles.statusIndicator} ${connected ? "bg-[#27ae60]" : "bg-red-500"}`}>
           {connected ? 'Connected' : 'Connecting...'}
         </div>
         <div onClick={() => closeWindow()} className='select-none hover:cursor-pointer hover:text-red-400'> <X /> </div>
@@ -111,7 +111,7 @@ const KernelAssistant = ({ userId, closeWindow }) => {
       
       <div className={styles.chatMessages} ref={chatContainerRef}>
         {messages.length === 0 && (
-          <div className={styles.emptyChat}>
+          <div className="flex items-center justify-center h-[100%] text-center text-[#95a5a6]">
             <p>Ask me anything about your finances!</p>
           </div>
         )}

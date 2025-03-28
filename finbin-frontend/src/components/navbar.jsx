@@ -13,7 +13,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 
-import { Calendar, Home, Inbox, Search, Settings, LogIn, HandCoins, LayoutDashboard} from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, LogIn, HandCoins, LayoutDashboard, ArrowRightFromLine, ArrowLeftFromLine} from "lucide-react"
 
 
 import { Separator } from "@/components/ui/separator"
@@ -52,10 +52,10 @@ export default function Navbar(){
 
                 {/* Button to open/close the sidebar */}
                 <Button
-                    className="md:hidden z-20 fixed top-4 left-4 bg-white dark:bg-gray-800 text-black dark:text-white hover:bg-green-500 dark:hover:bg-green-500  p-3 rounded-md"
+                    className={isOpen ? "hidden" : "md:hidden z-20 fixed top-4 left-4 border bg-white dark:bg-gray-800 text-black dark:text-white hover:bg-green-500 dark:hover:bg-green-500 p-5 rounded-md"}
                     onClick={toggleMenu}
                 >
-                    {isOpen ? "Close" : "Open"}
+                    {isOpen ? <ArrowLeftFromLine/> : <ArrowRightFromLine/>}
                 </Button>
 
                 {/* Sidebar Mobile*/}
@@ -64,7 +64,7 @@ export default function Navbar(){
                         isOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
                 >
-                    <div className="text-lg font-bold p-4">FinBin</div>
+                    <div className="text-lg font-bold p-4">Buckit</div>
 
                     <Separator />
 
@@ -116,7 +116,7 @@ export default function Navbar(){
                 {/* Sidebar Desktop*/}
                 <div className="hidden md:block flex-col w-[250px] h-full border-b-2  border-gray-300 dark:border-gray-700 gap-4 p-3">
                     <div className=" text-lg font-bold p-4">
-                        FinBin
+                        Buckit
                     </div>
 
                     <Separator />
