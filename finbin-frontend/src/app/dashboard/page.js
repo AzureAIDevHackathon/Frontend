@@ -117,13 +117,13 @@ export default function Dashboard(){
     return(
         <div className = "flex justify-start w-full h-screen">
             <Navbar />
-            <div onClick={chatOpener} className={openChat ? "hidden transition-all duration-300 ease-linear opacity-0" : "absolute z-10 right-16 bottom-12 h-[60px] w-[60px] dark:bg-blue-400 bg-sky-300 opacity-100 rounded-full ease-linear select-none hover:cursor-pointer hover:brightness-[85%] transition-all duration-200"}>
+            <div onClick={chatOpener} className={openChat ? "transition-all bg-sky-300 dark:bg-blue-400 duration-400 ease-linear opacity-0" : "fixed z-10 right-10 bottom-10 h-[60px] w-[60px] dark:bg-blue-400 bg-sky-300 opacity-100 rounded-full ease-linear select-none hover:cursor-pointer hover:brightness-[85%] transition-all duration-300"}>
                 <div className="flex w-full h-full relative items-center text-black justify-center">  
                     <div className="flex absolute justify-center"><MessageSquareText size={30} /></div>
                 </div>
             </div>
-            <div className={openChat ? "absolute z-10 right-12 bottom-10 overflow-hidden w-[full] h-[full] p-0 rounded-md group-focus-within:scale-100 transition-all duration-150 origin-bottom-right" 
-            : "absolute z-10 right-12 bottom-10 overflow-hidden items-start w-[full] h-[full] p-0 rounded-md scale-0 transition-all duration-150 origin-bottom-right"}>
+            <div className={openChat ? "fixed z-10 right-12 bottom-10 border overflow-hidden w-[full] h-[full] p-0 rounded-lg group-focus-within:scale-100 opacity-100 transition-all duration-250 origin-bottom-right" 
+            : "fixed z-10 right-12 bottom-10 overflow-hidden items-start w-[full] h-[full] p-0 rounded-lg scale-0 opacity-0 transition-all duration-250 origin-bottom-right"}>
                 <KernelAssistant closeWindow={setChat} userId={2}  />
             </div>
             
