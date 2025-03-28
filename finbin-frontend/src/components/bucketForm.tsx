@@ -39,6 +39,8 @@ const bucketSchema = z.object({
 });
 
 interface BucketFormProps {
+  rerenderToggle: boolean;
+  setRerenderToggle: React.Dispatch<React.SetStateAction<boolean>>
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -46,6 +48,8 @@ interface BucketFormProps {
 export default function BucketForm({
   isModalOpen,
   setIsModalOpen,
+  rerenderToggle,
+  setRerenderToggle
 }: BucketFormProps) {
   const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +101,7 @@ export default function BucketForm({
 
       toast.success("Bucket created successfully!");
       setIsModalOpen(false);
+      setRerenderToggle(!rerenderToggle)
       router.refresh(); // Refresh page or data after submission
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -105,6 +110,7 @@ export default function BucketForm({
       setIsLoading(false);
     }
   }
+  
 
   return (
     <div>

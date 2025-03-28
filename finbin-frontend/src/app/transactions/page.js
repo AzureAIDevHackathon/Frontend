@@ -41,6 +41,7 @@ export default function Transaction(){
     const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
     const [transactions, setTransactions] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [rerenderToggle, setRerenderToggle] = useState(false);
   
     // Fetch transactions
     useEffect(() => {
@@ -50,7 +51,7 @@ export default function Transaction(){
           .then((data) => setTransactions(data));
       }
       getTransactions();
-    }, []);
+    }, [rerenderToggle]);
   
     // Modal toggle
     const toggleModal = () => {
@@ -95,7 +96,7 @@ export default function Transaction(){
                 <div>
                     <Card>
                         <CardContent className="flex flex-col gap-4">
-                            <CardTitle>Transaction History</CardTitle>
+                            {/* <CardTitle>Transaction History</CardTitle>
                             <CardDescription>View and filter your transaction history</CardDescription>
 
                             <div className="flex justify-between items-center mb-4 gap-4">
@@ -129,7 +130,7 @@ export default function Transaction(){
                                         Export
                                     </Button>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="flex justify-between items-center mb-4">
                                 <div>
@@ -176,6 +177,8 @@ export default function Transaction(){
                     <TransactionForm
                         isModalOpen={isModalOpen}
                         setIsModalOpen={setIsModalOpen}
+                        rerenderToggle={rerenderToggle}
+                        setRerenderToggle={setRerenderToggle}
                     />
                     </div>
                 </div>
