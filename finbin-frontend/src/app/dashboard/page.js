@@ -16,6 +16,7 @@ import { useEffect, useState } from "react"
 import { set } from "react-hook-form"
 import KernelAssistant from "@/components/kernel-assistant"
 import { MessageSquareText } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const dummyinfo = {
     "financial_summary": {
@@ -74,9 +75,14 @@ export default function Dashboard(){
     const [income, setIncome] = useState({})
     const [expense, setExpense] = useState({})
     const [financialSummary, setFinancialSummary] = useState({})
+    const  router  = useRouter()
 
     const [openChat, setChat] = useState(0);
     function chatOpener(){setChat(!openChat)};
+
+    const navigateTo = (path) => {
+        router.push(path)  // Navigate to the specified path
+    }
 
     useEffect(()=>{
         function getIncome(){
@@ -106,6 +112,7 @@ export default function Dashboard(){
     let savingsBalance = financialSummary.savings_balance || 0;
     let investmentBalance = financialSummary.investment_balance || 0;
     let debtBalance = financialSummary.debt_balance || 0;
+    let networth = totalIncome + savingsBalance + investmentBalance - totalExpense - debtBalance
 
     return(
         <div className = "flex justify-start w-full h-screen">
@@ -158,7 +165,7 @@ export default function Dashboard(){
                             <CardContent>
                                 <CardTitle>Net Worth</CardTitle>
                                 <CardDescription>Monthly expenses across all categories</CardDescription>
-                                <p className="text-2xl font-bold">$12000.00</p>
+                                <p className="text-2xl font-bold">{formatCurrency(networth)}</p>
                             </CardContent>
                         </Card>
                     </div>
@@ -183,7 +190,7 @@ export default function Dashboard(){
                         <Card>
                             <CardHeader>
                                 <CardTitle>Investments</CardTitle>
-                                <CardDescription>Card Description</CardDescription>
+                                <CardDescription>Your current investment portfolio</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-3xl font-bold">{formatCurrency(investmentBalance)}</p>
@@ -197,7 +204,7 @@ export default function Dashboard(){
                         <Card>
                             <CardHeader>
                                 <CardTitle>Debt</CardTitle>
-                                <CardDescription>Card Description</CardDescription>
+                                <CardDescription>Your current debt balance</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-3xl font-bold">{formatCurrency(debtBalance)}</p>
@@ -213,25 +220,25 @@ export default function Dashboard(){
                     <div>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Card Title</CardTitle>
-                                <CardDescription>Card Description</CardDescription>
+                                <CardTitle>Transctions</CardTitle>
+                                <CardDescription>View your transactions</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <p>Card Content</p>
+                                <p></p>
                             </CardContent>
                             <CardFooter>
-                                <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">View All Transactions</Button>
+                                <Button onClick={() => navigateTo('/transactions')}className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">View All Transactions</Button>
                             </CardFooter>
                         </Card>
                     </div>
                     <div>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Card Title</CardTitle>
-                                <CardDescription>Card Description</CardDescription>
+                                <CardTitle>AI Assistant</CardTitle>
+                                <CardDescription>Chat with our AI</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <p>Card Content</p>
+                                <p></p>
                             </CardContent>
                             <CardFooter>
                                 <Button onClick={chatOpener} className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline">Chat with AI Assistant</Button>

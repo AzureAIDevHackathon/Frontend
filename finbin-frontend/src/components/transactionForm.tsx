@@ -21,11 +21,13 @@ const transactionSchema = z.object({
 })
 
 interface LoginFormProps {
+  rerenderToggle:boolean,
+  setRerenderToggle: React.Dispatch<React.SetStateAction<boolean>>
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function LoginForm({isModalOpen,setIsModalOpen}: {isModalOpen: boolean;setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;})  {
+export default function LoginForm({isModalOpen,setIsModalOpen,rerenderToggle,setRerenderToggle}: LoginFormProps)  {
 
   const apiroute = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
   const [isLoading, setIsLoading] = useState(false)
@@ -86,6 +88,7 @@ export default function LoginForm({isModalOpen,setIsModalOpen}: {isModalOpen: bo
     } finally {
         setIsLoading(false);
         setIsModalOpen(false);
+        setRerenderToggle(!rerenderToggle)
         
     }
   }
