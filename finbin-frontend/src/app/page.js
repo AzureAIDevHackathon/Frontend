@@ -1,17 +1,31 @@
-import Image from "next/image";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client"
 
-export default function Home() {
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+// import { Logo } from "@/components/logo"
+import { ThemeToggle } from "@/components/theme-toggle"
+
+export default function HomePage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem("token")
+    if (token) {
+      router.push("/dashboard")
+    } else {
+      router.push("/login")
+    }
+  }, [router])
+
   return (
-    <div className="flex items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
-        </TabsList>
-        <TabsContent value="account">Make changes to your account here.</TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
-      </Tabs>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="absolute left-4 top-4 md:left-8 md:top-8">
+        <ThemeToggle />
+      </div>
+      {/* <Logo className="mb-8" /> */}
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <p className="mt-4 text-muted-foreground">Redirecting you to the right place...</p>
     </div>
-  );
+  )
 }
