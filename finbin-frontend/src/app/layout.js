@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "FinBins",
+  title: "Buck.it",
   description: "Smart financial management, powered by Semantic Kernel",
 };
 
