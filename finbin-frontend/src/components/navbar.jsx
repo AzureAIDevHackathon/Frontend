@@ -101,7 +101,7 @@ export default function Navbar(){
                         <div className="w-full h-[3rem] flex">
                             <Button className="hover:bg-gray-200 hover:dark:bg-gray-700 h-full w-full flex flex-row justify-start" variant="outline">
                                 <div className="bg-amber-100 rounded-full w-[40px] h-[40px]" />
-                                <div>{'Joe Shmoe'}</div>
+                                <div>{'Adam'}</div>
                             </Button>
                         </div>
                         <div className="flex flex-row gap-3 w-full justify-center">
@@ -157,7 +157,7 @@ export default function Navbar(){
                         <div className="w-full h-[3rem] flex">
                             <Button className="hover:bg-gray-200 hover:dark:bg-gray-700 h-full w-full flex flex-row justify-start" variant="outline">
                                 <div className="bg-amber-100 rounded-full w-[40px] h-[40px]"></div>
-                                <div>{`Joe Shmoe`}</div>
+                                <div>{`Adam Buckings`}</div>
                             </Button>
                         </div>
                         <div className="flex flex-row gap-3 w-full justify-center">
