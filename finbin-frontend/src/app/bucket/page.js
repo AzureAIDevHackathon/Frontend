@@ -32,6 +32,27 @@ export default function (){
 
     const [buckets, setBuckets] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [rerenderToggle , setRerenderToggle] = useState(false)
+
+    function handleTrash(bucketid, userid){
+        fetch(`${apiroute}/buckets/${bucketid}?user_id=${userid}`,{
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                setBuckets(prevBuckets => prevBuckets.filter(bucket => bucket.id !== bucketid) )  // Visually update the buckets
+                // setRerenderToggle(!rerenderToggle)
+            }
+            else{
+                console.error("Bucket Delete Failed")
+            }
+        })
+        .then(data => console.log(data))
+        .catch(error => console.error("Error deleting branch : ", error))
+    }
 
     useEffect(()=>{
         function getBuckets() {
@@ -40,7 +61,7 @@ export default function (){
             .then((data) => setBuckets(data))
         }
         getBuckets()
-    },[])
+    },[rerenderToggle])
 
     // Modal toggle
     const toggleModal = () => {
@@ -67,9 +88,9 @@ export default function (){
                                     <div className="flex justify-between">
                                         <CardTitle className="text-2xl">{bucket.name}</CardTitle>
                                         <div className="flex flex-row ">
-                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowUp/></Button>
-                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowDown/></Button>
-                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><Trash2/></Button>
+                                            {/* <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowUp/></Button>
+                                            <Button className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><ArrowDown/></Button> */}
+                                            <Button onClick={() => handleTrash(bucket.id, bucket.user_id)} className="hover:bg-green-400 hover:dark:bg-green-400" variant="outline"><Trash2/></Button>
                                         </div>
                                     </div>
 
@@ -131,6 +152,8 @@ export default function (){
                     <BucketForm
                         isModalOpen={isModalOpen}
                         setIsModalOpen={setIsModalOpen}
+                        rerenderToggle = {rerenderToggle}
+                        setRerenderToggle={setRerenderToggle}
                     />
                     </div>
                 </div>
