@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "./theme-toggle"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+import whiteLogoFill from "@/components/logo white fill.png"
+import blackLogoFill from "@/components/logo black fill.png"
 
 import {
     Card,
@@ -64,7 +67,9 @@ export default function Navbar(){
                         isOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
                 >
-                    <div className="text-lg font-bold p-4">Buckit</div>
+                    <div className="flex p-3 ml-2">
+                        <Image className="dark:invert" src={blackLogoFill} width={90} height={90} />
+                    </div>
 
                     <Separator />
 
@@ -115,8 +120,8 @@ export default function Navbar(){
 
                 {/* Sidebar Desktop*/}
                 <div className="hidden md:block flex-col w-[250px] h-full border-b-2  border-gray-300 dark:border-gray-700 gap-4 p-3">
-                    <div className=" text-lg font-bold p-4">
-                        Buckit
+                    <div className="p-3">
+                        <Image className="dark:invert" src={blackLogoFill} width={100} height={100} />
                     </div>
 
                     <Separator />
